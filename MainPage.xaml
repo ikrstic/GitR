@@ -17,7 +17,10 @@
     </Page.Resources>
     <common:LayoutAwarePage.TopAppBar>
         <AppBar>
-            <Button x:Name="photoPageButton" Content="Покажи ми страницу са сликама" Click="PhotoPageButton_Click" HorizontalAlignment="Right"/>
+            <Button x:Name="photoPageButton" 
+            Click="PhotoPageButton_Click" 
+            HorizontalAlignment="Right" 
+            Style="{StaticResource PicturesAppBarButtonStyle}"/>
         </AppBar>
     </common:LayoutAwarePage.TopAppBar>
 

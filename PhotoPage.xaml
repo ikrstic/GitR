@@ -27,18 +27,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!-- Back button and page title -->
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Button x:Name="backButton" Click="GoBack" IsEnabled="{Binding Frame.CanGoBack, ElementName=pageRoot}" Style="{StaticResource BackButtonStyle}"/>
-            <TextBlock x:Name="pageTitle" Grid.Column="1" Text="{StaticResource AppName}" Style="{StaticResource PageHeaderTextStyle}"/>
-        </Grid>
-
         <VisualStateManager.VisualStateGroups>
-
             <!-- Visual states reflect the application's view state -->
             <VisualStateGroup x:Name="ApplicationViewStates">
                 <VisualState x:Name="FullScreenLandscape"/>
@@ -49,6 +38,20 @@
                     <Storyboard>
                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="backButton" Storyboard.TargetProperty="Style">
                             <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource PortraitBackButtonStyle}"/>
+                        </ObjectAnimationUsingKeyFrames>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(StackPanel.Orientation)" Storyboard.TargetName="stackPanel">
+                            <DiscreteObjectKeyFrame KeyTime="0">
+                                <DiscreteObjectKeyFrame.Value>
+                                    <Orientation>Vertical</Orientation>
+                                </DiscreteObjectKeyFrame.Value>
+                            </DiscreteObjectKeyFrame>
+                        </ObjectAnimationUsingKeyFrames>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="stackPanel">
+                            <DiscreteObjectKeyFrame KeyTime="0">
+                                <DiscreteObjectKeyFrame.Value>
+                                    <Thickness>0,0,20,0</Thickness>
+                                </DiscreteObjectKeyFrame.Value>
+                            </DiscreteObjectKeyFrame>
                         </ObjectAnimationUsingKeyFrames>
                     </Storyboard>
                 </VisualState>
@@ -62,9 +65,57 @@
                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="pageTitle" Storyboard.TargetProperty="Style">
                             <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource SnappedPageHeaderTextStyle}"/>
                         </ObjectAnimationUsingKeyFrames>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="contentGrid">
+                            <DiscreteObjectKeyFrame KeyTime="0">
+                                <DiscreteObjectKeyFrame.Value>
+                                    <Thickness>20,0,0,20</Thickness>
+                                </DiscreteObjectKeyFrame.Value>
+                            </DiscreteObjectKeyFrame>
+                        </ObjectAnimationUsingKeyFrames>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(StackPanel.Orientation)" Storyboard.TargetName="stackPanel">
+                            <DiscreteObjectKeyFrame KeyTime="0">
+                                <DiscreteObjectKeyFrame.Value>
+                                    <Orientation>Vertical</Orientation>
+                                </DiscreteObjectKeyFrame.Value>
+                            </DiscreteObjectKeyFrame>
+                        </ObjectAnimationUsingKeyFrames>
                     </Storyboard>
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
+        <!-- Back button and page title -->
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="backButton" Click="GoBack" IsEnabled="{Binding Frame.CanGoBack, ElementName=pageRoot}" Style="{StaticResource BackButtonStyle}"/>
+            <TextBlock x:Name="pageTitle" Grid.Column="1" Text="{StaticResource AppName}" Style="{StaticResource PageHeaderTextStyle}"/>
+        </Grid>
+        <Grid x:Name="contentGrid" Grid.Row="1" Margin="120,0,0,120">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="70"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Button Content="Додај слику"/>
+            <TextBlock Grid.Row="1" TextWrapping="Wrap" Text="TextBlock" 
+                       Style="{StaticResource PageSubheaderTextStyle}"/>
+            <StackPanel x:Name="stackPanel" Grid.Row="2" Orientation="Horizontal">
+                <Border BorderBrush="Gray" BorderThickness="7" Background="Gray">
+                    <Image Source="Assets/Logo.png"/>
+                </Border>
+                <StackPanel Margin="20,0,0,0">
+                    <TextBlock TextWrapping="Wrap" Text="File name:" Style="{StaticResource CaptionTextStyle}"/>
+                    <TextBlock TextWrapping="Wrap" Text="TextBlock:" Style="{StaticResource ItemTextStyle}" Margin="10,0,0,30"/>
+                    <TextBlock TextWrapping="Wrap" Text="Path:" Style="{StaticResource CaptionTextStyle}"/>
+                    <TextBlock TextWrapping="Wrap" Text="TextBlock:" Style="{StaticResource ItemTextStyle}" Margin="10,0,0,30"/>
+                    <TextBlock TextWrapping="Wrap" Text="Date created:" Style="{StaticResource CaptionTextStyle}"/>
+                    <TextBlock TextWrapping="Wrap" Text="TextBlock:" Style="{StaticResource ItemTextStyle}" Margin="10,0,0,30"/>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+
+
     </Grid>
 </common:LayoutAwarePage>
