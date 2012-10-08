@@ -37,6 +37,19 @@ namespace HelloWorldC
         /// session.  This will be null the first time a page is visited.</param>
         protected override void LoadState(Object navigationParameter, Dictionary<String, Object> pageState)
         {
+            //Restore values stored in seession state.
+            if (pageState != null && pageState.ContainsKey("greetingOutputText"))
+            {
+                greetingOutput.Text = pageState["greetingOutputText"].ToString();
+            }
+
+            //Restore values stored in app data.
+            Windows.Storage.ApplicationDataContainer roamingSetings =
+                Windows.Storage.ApplicationData.Current.RoamingSettings;
+            if (roamingSetings.Values.ContainsKey("userName"))
+            {
+                nameInput.Text = roamingSetings.Values["userName"].ToString();
+            }
         }
 
         /// <summary>
@@ -47,11 +60,19 @@ namespace HelloWorldC
         /// <param name="pageState">An empty dictionary to be populated with serializable state.</param>
         protected override void SaveState(Dictionary<String, Object> pageState)
         {
+            pageState["greetingOutputText"] = greetingOutput.Text;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             greetingOutput.Text = "Здраво, " + nameInput.Text + "!";
+        }
+
+        private void NameInput_TextChanger(object sender, TextChangedEventArgs e)
+        {
+            Windows.Storage.ApplicationDataContainer roamingSetings =
+                Windows.Storage.ApplicationData.Current.RoamingSettings;
+            roamingSetings.Values["userName"] = nameInput.Text;
         }
     }
 }
